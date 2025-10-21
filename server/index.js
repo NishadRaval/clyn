@@ -18,8 +18,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // 1. Only allow requests from our React app
-  credentials: true,                // 2. Tell the server to accept cookies
+  // This is an array of trusted sites
+  origin: [
+    'http://localhost:5173',       // For your local testing
+    'https://leval-1.vercel.app'  // For your live website
+  ],
+  credentials: true,
 }));
 app.use(cookieParser());
 
