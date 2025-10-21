@@ -18,7 +18,7 @@ function Navbar() {
       {/* --- THIS IS THE CHANGE --- */}
       <Link to="/" className={styles.logoLink}>
         {/* Point the src directly to the file in the public folder */}
-        <img src="/MERNshop.png" alt="MERNshop Logo" className={styles.logoImage} />
+        <img src="public/MERNshop logo.png" alt="MERNshop Logo" className={styles.logoImage} />
       </Link>
       {/* --- END OF CHANGE --- */}
 
