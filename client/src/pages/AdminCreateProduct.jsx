@@ -1,54 +1,45 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // We use this to redirect the user
-import styles from './AdminForm.module.css'; // We'll create a *reusable* form style
+import { useNavigate } from 'react-router-dom';
+import styles from './AdminForm.module.css';
+import { API_URL } from '../apiConfig'; // <-- IMPORT
 
 function AdminCreateProduct() {
-  const navigate = useNavigate(); // This hook lets us change pages
+  const navigate = useNavigate();
 
-  // 1. Set up state for every single field in our form
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState('T-Shirts');
-  
-  // For 'imageUrls', 'sizes', and 'colors', we'll just use a comma-separated string
-  // It's simpler to manage in a text box.
   const [imageUrls, setImageUrls] = useState('');
   const [sizes, setSizes] = useState('');
   const [colors, setColors] = useState('');
-
   const [loading, setLoading] = useState(false);
 
-  // 2. This function runs when the form is submitted
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Stop the page from refreshing
+    e.preventDefault();
     setLoading(true);
 
     try {
-      // 3. Convert our comma-separated strings into arrays
       const imageArray = imageUrls.split(',').map(url => url.trim());
       const sizeArray = sizes.split(',').map(s => s.trim());
       const colorArray = colors.split(',').map(c => c.trim());
 
-      // 4. Create the new product object
       const newProduct = {
         name,
         description,
-        price: Number(price), // Make sure price is a number
+        price: Number(price),
         category,
         imageUrls: imageArray,
         sizes: sizeArray,
         colors: colorArray,
       };
 
-      // 5. Send it to the backend API!
-      await axios.post('http://localhost:5000/api/products', newProduct);
+      // --- THIS LINE IS UPDATED ---
+      await axios.post(`${API_URL}/api/products`, newProduct);
 
       setLoading(false);
       alert('Product created successfully!');
-      
-      // 6. Redirect the admin back to the product list
       navigate('/admin/products');
 
     } catch (error) {

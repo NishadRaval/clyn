@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// We'll reuse the same styles as the 'My Orders' page
-import styles from './MyOrdersPage.module.css'; 
+import styles from './MyOrdersPage.module.css';
+import { API_URL } from '../apiConfig'; // <-- IMPORT
 
 function AdminOrderList() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // This function will be called to load orders
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      // Call our new '/api/orders' admin route
-      const { data } = await axios.get('http://localhost:5000/api/orders');
+      // --- THIS LINE IS UPDATED ---
+      const { data } = await axios.get(`${API_URL}/api/orders`);
       setOrders(data);
       setLoading(false);
     } catch (error) {
@@ -22,17 +21,15 @@ function AdminOrderList() {
     }
   };
 
-  // Fetch orders when the page first loads
   useEffect(() => {
     fetchOrders();
   }, []);
 
-  // This handler calls our new 'deliver' route
   const markAsDelivered = async (orderId) => {
     if (window.confirm('Mark this order as delivered?')) {
       try {
-        await axios.put(`http://localhost:5000/api/orders/${orderId}/deliver`);
-        // Refresh the list to show the change
+        // --- THIS LINE IS UPDATED ---
+        await axios.put(`${API_URL}/api/orders/${orderId}/deliver`);
         fetchOrders(); 
       } catch (error) {
         console.error('Error marking as delivered:', error);
@@ -67,10 +64,9 @@ function AdminOrderList() {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                {/* We can show the user's name because we 'populated' it */}
                 <td>{order.user ? order.user.name : 'Unknown User'}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>${order.totalPrice.toFixed(2)}</td>
+                <td>₹{order.totalPrice.toFixed(2)}</td>
                 <td>
                   {order.isPaid ? (
                     <span className={styles.paid}>Paid</span>
@@ -91,7 +87,7 @@ function AdminOrderList() {
                   </Link>
                   {!order.isDelivered && (
                     <button
-                      className={styles.deliverButton} // We'll add this style
+                      className={styles.deliverButton}
                       onClick={() => markAsDelivered(order._id)}
                     >
                       Mark as Delivered

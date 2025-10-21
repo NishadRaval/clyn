@@ -1,4 +1,3 @@
-// Use 'import' syntax now
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -17,15 +16,19 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+// --- THIS IS THE FIX ---
+// Tell the server to trust your live frontend
 app.use(cors({
-  // This is an array of trusted sites
   origin: [
     'http://localhost:5173',       // For your local testing
     'https://leval-1.vercel.app'  // For your live website
   ],
   credentials: true,
 }));
-app.use(cookieParser());
+// --- END OF FIX ---
+
+app.use(cookieParser()); // Read cookies
 
 const PORT = process.env.PORT || 5000;
 
@@ -44,7 +47,7 @@ connectDB();
 // --- Mount Routes ---
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/orders', orderRoutes); 
+app.use('/api/orders', orderRoutes);
 
 // Base Route
 app.get('/', (req, res) => {

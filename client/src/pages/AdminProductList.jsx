@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import styles from './AdminProductList.module.css'; // We'll create this
+import styles from './AdminProductList.module.css';
+import { API_URL } from '../apiConfig'; // <-- IMPORT
 
 function AdminProductList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. Fetch all products when the page loads
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        // --- THIS LINE IS UPDATED ---
+        const response = await axios.get(`${API_URL}/api/products`);
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
@@ -20,18 +21,13 @@ function AdminProductList() {
       }
     };
     fetchProducts();
-  }, []); // Empty array means run once on load
+  }, []);
 
-  // 2. This function will call our DELETE API
   const handleDelete = async (id) => {
-    // Ask for confirmation
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        // Call the delete route on our server
-        await axios.delete(`http://localhost:5000/api/products/${id}`);
-        
-        // 3. If successful, UPDATE THE UI by filtering out the deleted product
-        // This makes the page update instantly without a full refresh!
+        // --- THIS LINE IS UPDATED ---
+        await axios.delete(`${API_URL}/api/products/${id}`);
         setProducts(currentProducts => 
           currentProducts.filter(product => product._id !== id)
         );
@@ -51,13 +47,11 @@ function AdminProductList() {
     <div className={styles.adminContainer}>
       <div className={styles.header}>
         <h1 className={styles.title}>Manage Products</h1>
-        {/* We'll build this "create" page next */}
         <Link to="/admin/product/create" className={styles.createButton}>
           + Create New Product
         </Link>
       </div>
 
-      {/* 4. Display all products in a table */}
       <table className={styles.productTable}>
         <thead>
           <tr>
@@ -74,7 +68,6 @@ function AdminProductList() {
               <td>₹{product.price}</td>
               <td>{product.category}</td>
               <td className={styles.actions}>
-                {/* We'll build this "edit" page next */}
                 <Link 
                   to={`/admin/product/edit/${product._id}`} 
                   className={styles.editButton}

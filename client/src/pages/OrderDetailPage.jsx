@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import styles from './PlaceOrderPage.module.css'; // We can reuse this style!
+import styles from './PlaceOrderPage.module.css'; // Reusing style
+import { API_URL } from '../apiConfig'; // <-- IMPORT
 
 function OrderDetailPage() {
-  const { id: orderId } = useParams(); // Get the order ID from the URL
+  const { id: orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/orders/${orderId}`);
+        // --- THIS LINE IS UPDATED ---
+        const { data } = await axios.get(`${API_URL}/api/orders/${orderId}`);
         setOrder(data);
         setLoading(false);
       } catch (error) {
@@ -30,15 +32,12 @@ function OrderDetailPage() {
     return <p>Order not found.</p>;
   }
 
-  // If we have the order, render it
   return (
     <div className={styles.container}>
-      {/* We can reuse the title style */}
       <h1 className={styles.title}>Order: {order._id}</h1>
       <div className={styles.layout}>
         {/* --- LEFT COLUMN: Info --- */}
         <div className={styles.leftColumn}>
-          {/* Shipping Info */}
           <div className={styles.infoBox}>
             <h2 className={styles.subTitle}>Shipping</h2>
             <p>
@@ -54,7 +53,6 @@ function OrderDetailPage() {
             </p>
           </div>
 
-          {/* Payment Info */}
           <div className={styles.infoBox}>
             <h2 className={styles.subTitle}>Payment</h2>
             <p>
@@ -63,7 +61,6 @@ function OrderDetailPage() {
             </p>
           </div>
 
-          {/* Order Items */}
           <div className={styles.infoBox}>
             <h2 className={styles.subTitle}>Order Items</h2>
             <div className={styles.itemsList}>
@@ -98,7 +95,6 @@ function OrderDetailPage() {
               <span>Total</span>
               <span>₹{order.totalPrice.toFixed(2)}</span>
             </div>
-            {/* We could add a "Pay Now" button here if !order.isPaid */}
           </div>
         </div>
       </div>

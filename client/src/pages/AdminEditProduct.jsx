@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom'; // Import useParams
-import styles from './AdminForm.module.css'; // We can reuse the same form CSS!
+import { useNavigate, useParams } from 'react-router-dom';
+import styles from './AdminForm.module.css';
+import { API_URL } from '../apiConfig'; // <-- IMPORT
 
 function AdminEditProduct() {
   const navigate = useNavigate();
-  const { id } = useParams(); // 1. Get the product ID from the URL
+  const { id } = useParams();
 
-  // Set up state for all form fields
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
@@ -15,25 +15,21 @@ function AdminEditProduct() {
   const [imageUrls, setImageUrls] = useState('');
   const [sizes, setSizes] = useState('');
   const [colors, setColors] = useState('');
-
   const [loading, setLoading] = useState(true);
 
-  // 2. FETCH THE PRODUCT'S CURRENT DATA
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+        // --- THIS LINE IS UPDATED ---
+        const { data } = await axios.get(`${API_URL}/api/products/${id}`);
         
-        // 3. Fill the form fields with the data from the database
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
         setCategory(data.category);
-        // Convert arrays back to comma-separated strings for the text boxes
         setImageUrls(data.imageUrls.join(', '));
         setSizes(data.sizes.join(', '));
         setColors(data.colors.join(', '));
-        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -42,15 +38,13 @@ function AdminEditProduct() {
       }
     };
     fetchProduct();
-  }, [id]); // Re-run if the ID changes
+  }, [id]);
 
-  // 4. SUBMIT HANDLER (sends a PUT request)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Convert strings back to arrays
       const imageArray = imageUrls.split(',').map(url => url.trim());
       const sizeArray = sizes.split(',').map(s => s.trim());
       const colorArray = colors.split(',').map(c => c.trim());
@@ -65,12 +59,12 @@ function AdminEditProduct() {
         colors: colorArray,
       };
 
-      // 5. Send the PUT request to the update route
-      await axios.put(`http://localhost:5000/api/products/${id}`, updatedProduct);
+      // --- THIS LINE IS UPDATED ---
+      await axios.put(`${API_URL}/api/products/${id}`, updatedProduct);
 
       setLoading(false);
       alert('Product updated successfully!');
-      navigate('/admin/products'); // Go back to the list
+      navigate('/admin/products');
 
     } catch (error) {
       console.error('Error updating product:', error);
@@ -116,7 +110,7 @@ function AdminEditProduct() {
         
         <label className={styles.label}>Category:</label>
         <input 
-          type_
+          type="text"
           className={styles.input}
           value={category}
           onChange={(e) => setCategory(e.target.value)}

@@ -2,50 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from './ProductDetailPage.module.css';
-import { useCart } from '../context/CartContext'; // Import useCart
+import { useCart } from '../context/CartContext';
+import { API_URL } from '../apiConfig'; // <-- IMPORT
 
 function ProductDetailPage() {
   const { id } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // State for user's selections
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-
-  // Get the addToCart function from our global context
   const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+        // --- THIS LINE IS UPDATED ---
+        const response = await axios.get(`${API_URL}/api/products/${id}`);
         const fetchedProduct = response.data;
         setProduct(fetchedProduct);
         
-        // Set default selections *after* the product data has loaded
         if (fetchedProduct.sizes && fetchedProduct.sizes.length > 0) {
           setSelectedSize(fetchedProduct.sizes[0]);
         }
         if (fetchedProduct.colors && fetchedProduct.colors.length > 0) {
           setSelectedColor(fetchedProduct.colors[0]);
         }
-        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching product:', error);
         setLoading(false);
       }
     };
-
     fetchProduct();
-  }, [id]); // Re-run if the 'id' in the URL changes
+  }, [id]);
 
-  // Handler for the button click
   const handleAddToCart = () => {
-    // Check if a product is loaded and size/color are selected
     if (product && selectedSize && selectedColor) {
-      // Call the global addToCart function
       addToCart(product, selectedSize, selectedColor);
     } else {
       alert('Please wait for the product to load or make a selection.');
@@ -55,12 +47,10 @@ function ProductDetailPage() {
   if (loading) {
     return <p>Loading product details...</p>;
   }
-
   if (!product) {
     return <p>Product not found.</p>;
   }
 
-  // Render the page
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
