@@ -13,8 +13,8 @@
 }
 
 .logoImage {
-  height: 40px; /* Adjust this value to make the logo bigger or smaller */
-  width: auto; /* Maintain aspect ratio */
+  height: 50px; /* Increased from 40px */
+  width: auto; 
 }
 
 .navLinks {
