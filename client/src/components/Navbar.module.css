@@ -7,11 +7,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  text-decoration: none;
+.logoLink {
+  display: flex; /* Helps align the image */
+  align-items: center;
+}
+
+.logoImage {
+  height: 40px; /* Adjust this value to make the logo bigger or smaller */
+  width: auto; /* Maintain aspect ratio */
 }
 
 .navLinks {

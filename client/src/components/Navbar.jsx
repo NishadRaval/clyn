@@ -2,23 +2,26 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext'; // This is here for future use (like a cart icon)
+// import { useCart } from '../context/CartContext'; // Keep for later
 
 function Navbar() {
-  const { userInfo, logout } = useAuth(); // Get user info and logout function
+  const { userInfo, logout } = useAuth();
   const navigate = useNavigate();
 
-  // This function runs when "Logout" is clicked
   const logoutHandler = () => {
-    logout(); // Call the logout function from our context
-    navigate('/login'); // Redirect to the login page
+    logout();
+    navigate('/login');
   };
 
   return (
     <nav className={styles.navbar}>
-      <Link to="/" className={styles.brand}>
-        Leval 1
+      {/* --- THIS IS THE CHANGE --- */}
+      <Link to="/" className={styles.logoLink}>
+        {/* Point the src directly to the file in the public folder */}
+        <img src="/MERNshop.png" alt="MERNshop Logo" className={styles.logoImage} />
       </Link>
+      {/* --- END OF CHANGE --- */}
+
       <ul className={styles.navLinks}>
         <li>
           <Link to="/" className={styles.navLink}>Home</Link>
@@ -27,12 +30,9 @@ function Navbar() {
           <Link to="/cart" className={styles.navLink}>Cart</Link>
         </li>
         
-        {/* --- This is the smart logic --- */}
         {userInfo ? (
-          // --- If user IS logged in ---
           <>
             {userInfo.isAdmin && (
-              // --- Show this *only* if they are an admin ---
               <>
                 <li>
                   <Link to="/admin/products" className={styles.navLink}>
@@ -46,30 +46,24 @@ function Navbar() {
                 </li>
               </>
             )}
-
             <li>
-              {/* --- User's name links to their orders --- */}
               <Link to="/myorders" className={styles.navLink}>
                 {userInfo.name} (My Orders)
               </Link>
             </li>
-            
             <li>
-              {/* --- Logout button --- */}
               <button onClick={logoutHandler} className={styles.logoutButton}>
                 Logout
               </button>
             </li>
           </>
         ) : (
-          // --- If user is NOT logged in ---
           <li>
             <Link to="/login" className={styles.navLink}>
               Login
             </Link>
           </li>
         )}
-
       </ul>
     </nav>
   );
