@@ -4,6 +4,7 @@ import axios from 'axios';
 import App from './App.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx'; 
+import './index.css';
 
 axios.defaults.withCredentials = true;
 

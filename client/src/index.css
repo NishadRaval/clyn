@@ -1,0 +1,42 @@
+/* 1. Import Funnel Sans (weights 400 for regular, 700 for bold) */
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@400;700&display=swap');
+
+body {
+  /* 2. Apply Funnel Sans as the default font */
+  font-family: 'Funnel Sans', sans-serif; 
+  margin: 0; 
+  padding: 0;
+  box-sizing: border-box; 
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale; 
+  color: #333; 
+  background-color: #f8f9fa; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; 
+  padding: 0;
+}
+
+/* 3. Use the bold weight (700) for main headings */
+h1, h2, h3 {
+   font-weight: 700; 
+}
+
+/* (Optional: Use regular weight 400 for smaller headings, or keep 600/700) */
+h4, h5, h6 {
+  font-weight: 700; /* Or 400 if you prefer */
+}
+
+a {
+  color: inherit; 
+  text-decoration: none; 
+}
+
+a:hover {
+  text-decoration: underline; 
+}
+
+button {
+  font-family: inherit; /* Ensure buttons use Funnel Sans */
+}
