@@ -15,8 +15,8 @@ function PlaceOrderPage() {
 
   const placeOrderHandler = async () => {
     try {
-      // --- THIS LINE IS UPDATED ---
-      const { data } = await axios.post(
+      // 1. Call our backend API to save the order
+      const { data: createdOrder } = await axios.post(
         `${API_URL}/api/orders`,
         {
           orderItems: cartItems,
@@ -25,9 +25,14 @@ function PlaceOrderPage() {
         }
       );
 
-      clearCart();
-      alert('Order placed successfully!');
-      navigate('/');
+      // 2. Clear the cart
+      clearCart(); 
+
+      // 3. Show a success message (pretending payment worked)
+      alert('Order placed successfully! (Payment Pending)'); 
+
+      // 4. Redirect to the order details page for the new order
+      navigate(`/order/${createdOrder._id}`); 
 
     } catch (error) {
       console.error('Failed to place order:', error);
