@@ -14,11 +14,11 @@ const generateToken = (res, userId) => {
   // This is the professional way to send a token.
   // It prevents it from being stolen by scripts.
   res.cookie('jwt', token, {
-    httpOnly: true, // Prevents client-side script access
-    secure: process.env.NODE_ENV !== 'development', // Use secure cookies in production
-    sameSite: 'strict', // Prevents cross-site attacks
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
-  });
+      httpOnly: true, // Prevents client-side script access
+      secure: true, // <-- EXPLICITLY SET TO TRUE (Requires HTTPS)
+      sameSite: 'None', // <-- CHANGE FROM 'strict' TO 'None'
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
 };
 
 export default generateToken;
