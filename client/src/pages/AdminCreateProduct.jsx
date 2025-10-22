@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './AdminForm.module.css';
-import { API_URL } from '../apiConfig'; // <-- IMPORT
+import { API_URL } from '../apiConfig'; 
+import { toast } from 'react-toastify';
 
 function AdminCreateProduct() {
   const navigate = useNavigate();
@@ -39,13 +40,13 @@ function AdminCreateProduct() {
       await axios.post(`${API_URL}/api/products`, newProduct);
 
       setLoading(false);
-      alert('Product created successfully!');
+      toast.success('Product created!');
       navigate('/admin/products');
 
     } catch (error) {
       console.error('Error creating product:', error);
       setLoading(false);
-      alert('Failed to create product. Check console for details.');
+      toast.error('Failed to create product. Check console.');
     }
   };
 

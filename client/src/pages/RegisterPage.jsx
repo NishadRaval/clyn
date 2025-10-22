@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './AuthForm.module.css'; // We reuse the same CSS!
+import styles from './AuthForm.module.css'; 
 import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
 
 function RegisterPage() {
   const [name, setName] = useState('');
@@ -18,7 +19,7 @@ function RegisterPage() {
     
     // Check if passwords match
     if (password !== confirmPassword) {
-      alert('Passwords do not match!');
+      toast.error('Passwords do not match!');
       return;
     }
 

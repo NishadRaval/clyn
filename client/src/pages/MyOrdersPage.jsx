@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import styles from './MyOrdersPage.module.css';
-import { API_URL } from '../apiConfig'; // <-- IMPORT
+import { API_URL } from '../apiConfig'; 
+import Loader from '../components/Loader';
 
 function MyOrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -28,9 +29,7 @@ function MyOrdersPage() {
     }
   }, [userInfo]);
 
-  if (loading) {
-    return <p>Loading your orders...</p>;
-  }
+  if (loading) { return <Loader />; }
 
   return (
     <div className={styles.container}>

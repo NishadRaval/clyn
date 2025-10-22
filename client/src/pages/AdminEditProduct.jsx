@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './AdminForm.module.css';
-import { API_URL } from '../apiConfig'; // <-- IMPORT
+import { API_URL } from '../apiConfig';
+import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function AdminEditProduct() {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ function AdminEditProduct() {
       } catch (error) {
         console.error('Error fetching product:', error);
         setLoading(false);
-        alert('Failed to load product data.');
+        toast.error('Failed to load product data.');
       }
     };
     fetchProduct();
@@ -63,19 +65,17 @@ function AdminEditProduct() {
       await axios.put(`${API_URL}/api/products/${id}`, updatedProduct);
 
       setLoading(false);
-      alert('Product updated successfully!');
+      toast.success('Product updated!');
       navigate('/admin/products');
 
     } catch (error) {
       console.error('Error updating product:', error);
       setLoading(false);
-      alert('Failed to update product. Check console.');
+      toast.error('Failed to update product. Check console.');
     }
   };
 
-  if (loading && !name) {
-    return <p>Loading product data...</p>;
-  }
+  if (loading && !name) { return <Loader />; }
 
   return (
     <div className={styles.formContainer}>

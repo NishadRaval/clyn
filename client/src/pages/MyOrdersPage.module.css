@@ -1,75 +1,117 @@
 .container {
-  max-width: 1000px;
+  max-width: 1100px; /* Wider */
   margin: 2rem auto;
   padding: 1rem;
 }
 
 .title {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 2rem;
+  color: var(--color-text-headings);
 }
 
 .orderTable {
   width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  background-color: #fff;
+  border-collapse: collapse; /* Use collapse for cleaner lines */
+  background-color: var(--color-background-alt); /* Dark bg */
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  overflow: hidden; /* For radius */
+  box-shadow: var(--box-shadow-sm); /* Subtle shadow */
 }
 
-.orderTable th,
-.orderTable td {
-  border: 1px solid #eee;
-  padding: 1rem;
-  text-align: left;
-}
-
+/* Table Headers */
 .orderTable th {
-  background-color: #f9f9f9;
+  background-color: #1f2937; /* Slightly darker header */
+  padding: 0.75rem 1rem; /* Adjust padding */
+  text-align: left;
   font-weight: 600;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem; /* Smaller header text */
+  border-bottom: 1px solid var(--color-border);
 }
 
+/* Table Cells */
+.orderTable td {
+  padding: 0.75rem 1rem; /* Match header padding */
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Alternating Row Colors (Optional but nice) */
+.orderTable tbody tr:nth-child(even) {
+  background-color: rgba(31, 41, 55, 0.5); /* Slightly different dark for even rows */
+}
+
+/* Remove border from last row */
+.orderTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Specific Cell Styling */
+.orderTable td:first-child { /* Style ID */
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+.orderTable td:nth-child(3) { /* Style Total */
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Status Indicators */
 .paid {
-  color: green;
+  color: var(--color-success);
   font-weight: 600;
 }
-
 .notPaid {
-  color: red;
+  color: var(--color-danger);
   font-weight: 600;
 }
 
-.detailsButton {
-  background-color: #f0f0f0;
-  color: #333;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.detailsButton:hover {
-  background-color: #e0e0e0;
-}
-
+/* Action Buttons Container */
 .actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack buttons vertically */
   gap: 0.5rem;
-  align-items: flex-start;
+  align-items: flex-start; /* Align left */
 }
 
-.deliverButton {
-  background-color: #d1fae5;
-  color: #065f46;
+/* Button Base Styles (Inherited from index.css) */
+
+/* Details Button */
+.detailsButton {
+  /* Inherits base button styles via Link/button */
+  display: inline-flex;
+  padding: 0.3rem 0.6rem; /* Smaller padding */
+  font-size: 0.8rem; /* Smaller font */
+  background-color: #374151; /* Dark grey */
+  color: var(--color-text-secondary);
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
+  text-decoration: none;
+  line-height: 1.4; /* Adjust line height */
+}
+.detailsButton:hover {
+  background-color: #4b5563; /* Lighter grey */
+  color: var(--color-text-primary);
+  text-decoration: none;
 }
 
+/* Deliver Button */
+.deliverButton {
+  /* Inherits base button styles */
+  padding: 0.3rem 0.6rem; /* Smaller padding */
+  font-size: 0.8rem; /* Smaller font */
+  background-color: rgba(16, 185, 129, 0.1); /* Light green bg */
+  color: var(--color-success);
+  border: none;
+  line-height: 1.4;
+}
 .deliverButton:hover {
-  background-color: #a7f3d0;
+  background-color: rgba(16, 185, 129, 0.2);
+  color: var(--color-success-hover); /* Darker green */
 }

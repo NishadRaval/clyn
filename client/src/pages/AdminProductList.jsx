@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './AdminProductList.module.css';
-import { API_URL } from '../apiConfig'; // <-- IMPORT
+import { API_URL } from '../apiConfig';
+import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function AdminProductList() {
   const [products, setProducts] = useState([]);
@@ -31,17 +33,15 @@ function AdminProductList() {
         setProducts(currentProducts => 
           currentProducts.filter(product => product._id !== id)
         );
-        alert('Product deleted successfully!');
+        toast.success('Product deleted!');
       } catch (error) {
         console.error('Error deleting product:', error);
-        alert('Failed to delete product.');
+        toast.error('Failed to delete product.');
       }
     }
   };
 
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
+  if (loading) { return <Loader />; }
 
   return (
     <div className={styles.adminContainer}>

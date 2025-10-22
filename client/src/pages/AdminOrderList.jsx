@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './MyOrdersPage.module.css';
-import { API_URL } from '../apiConfig'; // <-- IMPORT
+import { API_URL } from '../apiConfig';
+import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function AdminOrderList() {
   const [orders, setOrders] = useState([]);
@@ -33,14 +35,12 @@ function AdminOrderList() {
         fetchOrders(); 
       } catch (error) {
         console.error('Error marking as delivered:', error);
-        alert('Failed to update order.');
+        toast.error('Failed to update order.');
       }
     }
   };
 
-  if (loading) {
-    return <p>Loading all orders...</p>;
-  }
+  if (loading) { return <Loader />; }
 
   return (
     <div className={styles.container}>

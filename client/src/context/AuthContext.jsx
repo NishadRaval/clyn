@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { API_URL } from '../apiConfig'; // <-- THIS IS THE FIX
+import { API_URL } from '../apiConfig'; 
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (error) {
       console.error('Login failed:', error);
-      alert(error.response?.data?.message || 'Login failed');
+      toast.error(error.response?.data?.message || 'Login failed');
       return false;
     }
   };
@@ -48,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (error) {
       console.error('Register failed:', error);
-      alert(error.response?.data?.message || 'Registration failed');
+      toast.error(error.response?.data?.message || 'Registration failed');
       return false;
     }
   };

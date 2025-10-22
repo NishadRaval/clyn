@@ -3,7 +3,8 @@ import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './PlaceOrderPage.module.css';
-import { API_URL } from '../apiConfig'; // <-- IMPORT
+import { API_URL } from '../apiConfig'; 
+import { toast } from 'react-toastify';
 
 function PlaceOrderPage() {
   const { cartItems, shippingAddress, clearCart } = useCart();
@@ -29,14 +30,14 @@ function PlaceOrderPage() {
       clearCart(); 
 
       // 3. Show a success message (pretending payment worked)
-      alert('Order placed successfully! (Payment Pending)'); 
+      toast.success('Order placed successfully!');
 
       // 4. Redirect to the order details page for the new order
       navigate(`/order/${createdOrder._id}`); 
 
     } catch (error) {
       console.error('Failed to place order:', error);
-      alert(error.response?.data?.message || 'Failed to place order');
+      toast.error(error.response?.data?.message || 'Failed to place order');
     }
   };
 

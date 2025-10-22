@@ -1,7 +1,25 @@
 .appContainer {
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .mainContent {
-  padding: 2rem;
+  flex-grow: 1; /* Allows main content to fill available space */
+  padding: 2rem 1rem; /* Add vertical and horizontal padding */
+  max-width: 1200px; /* Max width for content */
+  margin-left: auto; /* Center the content */
+  margin-right: auto; /* Center the content */
+  width: 100%; /* Ensure it takes full width up to max-width */
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+.footer {
+  padding: 1.5rem 1rem; /* Adjust padding */
+  background-color: var(--color-background-alt); /* Use alt dark bg */
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-text-muted); /* Use muted text color */
+  font-size: 0.9rem;
+  margin-top: auto; /* Pushes footer to the bottom */
 }
