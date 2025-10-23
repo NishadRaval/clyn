@@ -58,8 +58,8 @@ This project covers the essential foundation of an e-commerce platform.
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository-url>
-    cd <repository-name>
+    git clone https://github.com/NishadRaval/clyn.git
+    cd clyn
     ```
 2.  **Backend Setup:**
     * `cd server`
