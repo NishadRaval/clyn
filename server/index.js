@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors({
   origin: [
     'http://localhost:5173',       // For your local testing
-    'https://leval1.vercel.app'  // For your live website
+    'https://clynshop.vercel.app'  // For your live website
   ],
   credentials: true,
 }));
